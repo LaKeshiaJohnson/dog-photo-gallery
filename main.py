@@ -28,6 +28,12 @@ def dog_image_gallery():
       return render_template("dogs.html", images=dog_images, breed=prettify_dog_breed(breed), errors=[])
   return render_template("dogs.html", images=[], breed="", errors=errors)
 
+@app.route("/random", methods=["POST"])
+def get_random():
+    response = requests.get("https://dog.ceo/api/breeds/image/random")
+    data = response.json()
+    dog_images = [data["message"]]
+    return render_template("dogs.html", images=dog_images)
 
 app.debug = True
 app.run(host='0.0.0.0', port=8080)
